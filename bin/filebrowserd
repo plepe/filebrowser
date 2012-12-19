@@ -1,0 +1,22 @@
+#!/usr/bin/php
+<?php include "conf.php"; /* load a local configuration */ ?>
+<?php include "modulekit/loader.php"; /* loads all php-includes */ ?>
+<?
+function memorize_directory($base_path, $path) {
+  print "* Memorizing $path\n";
+  $d=opendir("{$base_path}{$path}");
+  while($f=readdir($d)) {
+    if(substr($f, 0, 1)==".") ; // ignore hidden files
+    else if(is_dir("{$base_path}{$path}$f")) {
+      memorize_directory($base_path, "{$path}{$f}/");
+    }
+    else {
+      print "  $path: $f\n";
+    }
+  }
+  closedir($d);
+}
+
+foreach($paths as $path=>$data) {
+  memorize_directory($path, "/");
+}

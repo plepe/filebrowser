@@ -1,3 +1,10 @@
 <?
 // A title for this media archive
 $title="Filebrowser";
+
+// Path(s)
+$paths=array(
+  "/mp3"=>array(
+    "name"=>"MP3-Archive",
+  ),
+);
