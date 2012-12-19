@@ -4,6 +4,7 @@
 <?
 function memorize_directory($archive_id, $archive_conf, $path) {
   global $db;
+  global $links;
 
   $sqllite_archive_id=$db->escapeString($archive_id);
   $sqlite_path=$db->escapeString($path);
@@ -13,8 +14,14 @@ function memorize_directory($archive_id, $archive_conf, $path) {
   print "* Memorizing $path => $directory_id\n";
   $d=opendir("{$archive_conf['path']}{$path}");
   while($f=readdir($d)) {
+    $file_path="{$archive_conf['path']}{$path}$f";
+
     if(substr($f, 0, 1)==".") ; // ignore hidden files
-    elseif(is_dir("{$archive_conf['path']}{$path}$f")) {
+    elseif(is_link($file_path)&&is_dir($file_path)) {
+      $links[]=array($directory_id, $f,
+        realpath("{$archive_conf['path']}{$path}".readlink($file_path)));
+    }
+    elseif(is_dir($file_path)) {
       $sqlite_file=$db->escapeString($f);
       $sub_directory=memorize_directory($archive_id, $archive_conf, "{$path}{$f}/");
 
@@ -32,13 +39,42 @@ function memorize_directory($archive_id, $archive_conf, $path) {
   return $directory_id;
 }
 
+function memorize_link($link_data) {
+  global $db;
+  global $paths;
+
+  $found=false;
+  $res=$db->query("select * from directory");
+  while($elem=$res->fetchArray()) {
+    if("{$paths[$elem['archive_id']]['path']}{$elem['path']}" == "{$link_data[2]}/") {
+      $found=$elem['directory_id'];
+      break;
+    }
+  }
+
+  if($found===false) {
+    print "  {$link_data[0]}/{$link_data[1]} -> {$link_data[2]}: not found\n";
+    return;
+  }
+
+  print "  {$link_data[0]}/{$link_data[1]} -> {$link_data[2]}: $found\n";
+
+  $sqlite_file=$db->escapeString($link_data[1]);
+  $db->query("insert into directory_link (directory_id, filename, sub_directory) values ({$link_data[0]}, '{$sqlite_file}', {$found})");
+}
+
 unlink("{$cache}/new.db");
 $db=new SQLite3("{$cache}/new.db");
 $db->query(file_get_contents("init.sql"));
+$links=array();
 
 foreach($paths as $archive_id=>$archive_conf) {
   memorize_directory($archive_id, $archive_conf, "/");
 }
+
+print "* Memorizing links:\n";
+foreach($links as $link)
+  memorize_link($link);
 
 $db->close();
 rename("{$cache}/new.db", "{$cache}/db.db");
