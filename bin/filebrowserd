@@ -2,20 +2,20 @@
 <?php include "conf.php"; /* load a local configuration */ ?>
 <?php include "modulekit/loader.php"; /* loads all php-includes */ ?>
 <?
-function memorize_directory($base_path, $path) {
+function memorize_directory($archive_id, $archive_conf, $path) {
   global $db;
 
-  $sqllite_base_path=$db->escapeString($base_path);
+  $sqllite_archive_id=$db->escapeString($archive_id);
   $sqlite_path=$db->escapeString($path);
-  $db->query("insert into directory (archive, path) values ('{$sqllite_base_path}', '{$sqlite_path}')");
+  $db->query("insert into directory (archive_id, path) values ('{$sqllite_archive_id}', '{$sqlite_path}')");
   $directory_id=$db->lastInsertRowID();
 
   print "* Memorizing $path => $directory_id\n";
-  $d=opendir("{$base_path}{$path}");
+  $d=opendir("{$archive_conf['path']}{$path}");
   while($f=readdir($d)) {
     if(substr($f, 0, 1)==".") ; // ignore hidden files
-    else if(is_dir("{$base_path}{$path}$f")) {
-      memorize_directory($base_path, "{$path}{$f}/");
+    else if(is_dir("{$archive_conf['path']}{$path}$f")) {
+      memorize_directory($archive_id, $archive_conf, "{$path}{$f}/");
     }
     else {
       $sqlite_file=$db->escapeString($f);
@@ -33,8 +33,8 @@ unlink("{$cache}/new.db");
 $db=new SQLite3("{$cache}/new.db");
 $db->query(file_get_contents("init.sql"));
 
-foreach($paths as $path=>$data) {
-  memorize_directory($path, "/");
+foreach($paths as $archive_id=>$archive_conf) {
+  memorize_directory($archive_id, $archive_conf, "/");
 }
 
 $db->close();

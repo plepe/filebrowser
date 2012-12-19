@@ -1,6 +1,6 @@
 create table directory (
   directory_id  integer not null,
-  archive       text    not null,
+  archive_id    text    not null,
   path          text    not null,
   primary key(directory_id)
 );
