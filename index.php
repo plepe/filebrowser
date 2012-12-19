@@ -8,5 +8,21 @@
     <?php print modulekit_include_css(); /* prints all css-includes */ ?>
   </head>
   <body>
+<?
+$path_parts=array();
+if(isset($_REQUEST['p'])) {
+  $path=$_REQUEST['p'];
+  $path_parts=explode("/", $path);
+}
+
+if((sizeof($path_parts)==0)||(!isset($paths[$path_parts[0]]))) {
+  print "<ul>\n";
+  foreach($paths as $archive_id=>$archive_conf) {
+    print "<li><a href='?p={$archive_id}'>{$archive_conf['name']}</a></li>\n";
+  }
+  print "</ul>\n";
+}
+
+?>
   </body>
 </html>
