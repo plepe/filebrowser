@@ -8,3 +8,6 @@ $paths=array(
     "name"=>"MP3-Archive",
   ),
 );
+
+// Path to 'cache'-directory; must be webserver writeable
+$cache="cache";

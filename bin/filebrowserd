@@ -17,6 +17,10 @@ function memorize_directory($base_path, $path) {
   closedir($d);
 }
 
+unlink("{$cache}/new.db");
+$db=new SQLite3("{$cache}/new.db");
+$db->query(file_get_contents("init.sql"));
+
 foreach($paths as $path=>$data) {
   memorize_directory($path, "/");
 }
