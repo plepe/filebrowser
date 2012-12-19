@@ -25,11 +25,11 @@ function memorize_directory($archive_id, $archive_conf, $path) {
       $sqlite_file=$db->escapeString($f);
       $sub_directory=memorize_directory($archive_id, $archive_conf, "{$path}{$f}/");
 
-      $db->query("insert into directory_link (directory_id, filename, sub_directory) values ({$directory_id}, '{$sqlite_file}', {$sub_directory})");
+      $db->query("insert into directory_link (directory_id, name, sub_directory) values ({$directory_id}, '{$sqlite_file}', {$sub_directory})");
     }
     else {
       $sqlite_file=$db->escapeString($f);
-      $db->query("insert into file (directory_id, filename) values ({$directory_id}, '{$sqlite_file}')");
+      $db->query("insert into file (directory_id, name) values ({$directory_id}, '{$sqlite_file}')");
 
       print "  $path: $f\n";
     }
@@ -60,7 +60,7 @@ function memorize_link($link_data) {
   print "  {$link_data[0]}/{$link_data[1]} -> {$link_data[2]}: $found\n";
 
   $sqlite_file=$db->escapeString($link_data[1]);
-  $db->query("insert into directory_link (directory_id, filename, sub_directory) values ({$link_data[0]}, '{$sqlite_file}', {$found})");
+  $db->query("insert into directory_link (directory_id, name, sub_directory) values ({$link_data[0]}, '{$sqlite_file}', {$found})");
 }
 
 unlink("{$cache}/new.db");
