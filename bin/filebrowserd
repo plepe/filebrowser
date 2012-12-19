@@ -3,7 +3,14 @@
 <?php include "modulekit/loader.php"; /* loads all php-includes */ ?>
 <?
 function memorize_directory($base_path, $path) {
-  print "* Memorizing $path\n";
+  global $db;
+
+  $sqllite_base_path=$db->escapeString($base_path);
+  $sqlite_path=$db->escapeString($path);
+  $db->query("insert into directory (archive, path) values ('{$sqllite_base_path}', '{$sqlite_path}')");
+  $directory_id=$db->lastInsertRowID();
+
+  print "* Memorizing $path => $directory_id\n";
   $d=opendir("{$base_path}{$path}");
   while($f=readdir($d)) {
     if(substr($f, 0, 1)==".") ; // ignore hidden files
@@ -11,10 +18,15 @@ function memorize_directory($base_path, $path) {
       memorize_directory($base_path, "{$path}{$f}/");
     }
     else {
+      $sqlite_file=$db->escapeString($f);
+      $db->query("insert into file (directory_id, filename) values ({$directory_id}, '{$sqlite_file}')");
+
       print "  $path: $f\n";
     }
   }
   closedir($d);
+
+  return $directory_id;
 }
 
 unlink("{$cache}/new.db");
