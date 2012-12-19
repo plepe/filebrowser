@@ -14,7 +14,7 @@ function memorize_directory($archive_id, $archive_conf, $path) {
   $d=opendir("{$archive_conf['path']}{$path}");
   while($f=readdir($d)) {
     if(substr($f, 0, 1)==".") ; // ignore hidden files
-    else if(is_dir("{$archive_conf['path']}{$path}$f")) {
+    elseif(is_dir("{$archive_conf['path']}{$path}$f")) {
       $sqlite_file=$db->escapeString($f);
       $sub_directory=memorize_directory($archive_id, $archive_conf, "{$path}{$f}/");
 
