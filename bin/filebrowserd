@@ -36,3 +36,6 @@ $db->query(file_get_contents("init.sql"));
 foreach($paths as $path=>$data) {
   memorize_directory($path, "/");
 }
+
+$db->close();
+rename("{$cache}/new.db", "{$cache}/db.db");
