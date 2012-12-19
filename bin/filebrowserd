@@ -15,7 +15,10 @@ function memorize_directory($archive_id, $archive_conf, $path) {
   while($f=readdir($d)) {
     if(substr($f, 0, 1)==".") ; // ignore hidden files
     else if(is_dir("{$archive_conf['path']}{$path}$f")) {
-      memorize_directory($archive_id, $archive_conf, "{$path}{$f}/");
+      $sqlite_file=$db->escapeString($f);
+      $sub_directory=memorize_directory($archive_id, $archive_conf, "{$path}{$f}/");
+
+      $db->query("insert into directory_link (directory_id, filename, sub_directory) values ({$directory_id}, '{$sqlite_file}', {$sub_directory})");
     }
     else {
       $sqlite_file=$db->escapeString($f);
