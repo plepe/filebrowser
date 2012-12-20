@@ -1,10 +1,10 @@
 <?
-class _directory {
+class _directory extends _item {
   function __construct($path_part, $parent, $data=null) {
+    parent::__construct($parent);
     global $db;
 
     $this->path_part=$path_part;
-    $this->parent=$parent;
 
     if($data===null) {
       $sql_path=$db->escapeString($this->path());
@@ -24,28 +24,7 @@ class _directory {
     return $this->data['name'];
   }
 
-  function path() {
-    return $this->parent->path().$this->path_part."/";
-  }
-
-  function url() {
-    return $this->parent->url()."/".urlencode($this->path_part);
-  }
-
-  function print_link() {
-    return "<a href='".$this->url()."'>".
-      htmlspecialchars($this->name()).
-      "</a>";
-  }
-
-  function print_link_path() {
-    $ret="";
-
-    if($this->parent)
-      $ret.=$this->parent->print_link_path();
-
-    $ret.="<li class='directory'>".$this->print_link()."</li>\n";
-
-    return $ret;
+  function type() {
+    return "directory";
   }
 }

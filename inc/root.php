@@ -1,9 +1,9 @@
 <?
 $ob_root=null;
 
-class _root extends _directory {
+class _root extends _item {
   function __construct() {
-    global $db;
+    parent::__construct(null);
   }
 
   function url() {
@@ -11,19 +11,15 @@ class _root extends _directory {
   }
 
   function path() {
-    return "/";
+    return "";
   }
 
   function name() {
     return "Root";
   }
 
-  function print_link_path() {
-    $ret="";
-
-    $ret.="<li class='root'>".$this->print_link()."</li>\n";
-
-    return $ret;
+  function type() {
+    return "root";
   }
 }
 

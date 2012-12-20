@@ -1,12 +1,11 @@
 <?
-class _archive extends _directory {
+class _archive extends _item {
   function __construct($archive_id) {
+    parent::__construct(get_root());
     global $db;
     global $paths;
 
     $this->archive_id=$archive_id;
-
-    $this->parent=get_root();
 
     if(!isset($paths[$archive_id]))
       throw new Exception("Archive '{$archive_id}' not found!");
@@ -24,18 +23,11 @@ class _archive extends _directory {
     return "?p={$this->archive_id}";
   }
 
-  function path() {
-    return "/";
+  function name() {
+    return $this->data['name'];
   }
 
-  function print_link_path() {
-    $ret="";
-
-    if($this->parent)
-      $ret.=$this->parent->print_link_path();
-
-    $ret.="<li class='archive'>".$this->print_link()."</li>\n";
-
-    return $ret;
+  function type() {
+    return "archive";
   }
 }

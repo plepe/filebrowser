@@ -10,6 +10,7 @@ $depend=array();
 // these files will be included in this order:
 $include=array();
 $include['php']=array(
+  "inc/item.php",
   "inc/directory.php",
   "inc/*.php",
 );
