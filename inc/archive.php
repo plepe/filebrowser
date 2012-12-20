@@ -18,6 +18,7 @@ class _archive extends _directory {
       throw new Exception("Root of archive '{$archive_id}' not found!");
 
     $this->directory_id=$data['directory_id'];
+    $this->archive=$this;
   }
 
   function url($options=array()) {
@@ -41,5 +42,20 @@ class _archive extends _directory {
 
   function type() {
     return "archive";
+  }
+
+  function get_contents($path) {
+    return file_get_contents($this->data['path']."/$path");
+  }
+
+  function fopen($path, $mode) {
+    return fopen($this->data['path']."/$path", $mode);
+  }
+
+  function file_stat($path) {
+    $stat=stat($this->data['path']."/$path");
+    $stat['mime_type']=mime_content_type($this->data['path']."/$path");
+
+    return $stat;
   }
 }

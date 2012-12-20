@@ -16,6 +16,7 @@ class _directory extends _item {
 
     $this->directory_id=$data['directory_id'];
     $this->data=$data;
+    $this->archive=$this->parent->archive;
   }
 
   function name() {
