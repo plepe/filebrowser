@@ -20,8 +20,15 @@ class _archive extends _directory {
     $this->directory_id=$data['directory_id'];
   }
 
-  function url() {
-    return "?p={$this->archive_id}";
+  function url($options=array()) {
+    $ret="";
+
+    if(isset($options['_file']))
+      $ret.=$options['_file'];
+
+    $ret.="?p={$this->archive_id}";
+
+    return $ret;
   }
 
   function name() {

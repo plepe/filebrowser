@@ -6,8 +6,15 @@ class _root extends _item {
     parent::__construct("", null);
   }
 
-  function url() {
-    return "?p=";
+  function url($options=array()) {
+    $ret="";
+
+    if(isset($options['_file']))
+      $ret.=$options['_file'];
+
+    $ret.="?p=";
+
+    return $ret;
   }
 
   function path() {
