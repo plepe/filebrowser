@@ -22,6 +22,26 @@ class _directory extends _item {
     return $this->data['name'];
   }
 
+  function content() {
+    global $db;
+    if(isset($this->content))
+      return $this->content;
+
+    $res=$db->query("select name, 'directory' as type from directory_link where directory_id='{$this->directory_id}' union select name, 'file' as type from file where directory_id='{$this->directory_id}'");
+    while($data=$res->fetchArray()) {
+      switch($data['type']) {
+        case 'directory':
+          $this->content[]=new _directory($data['name'], $this);
+          break;
+        case 'file':
+          $this->content[]=new _file($data['name'], $this);
+          break;
+      }
+    }
+
+    return $this->content;
+  }
+
   function type() {
     return "directory";
   }

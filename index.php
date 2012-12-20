@@ -56,13 +56,7 @@ print "<ul>\n";
 print $item->print_link_path();
 print "</ul>\n";
 
-if((sizeof($path_parts)==0)||(!isset($paths[$path_parts[0]]))) {
-  print "<ul>\n";
-  foreach($paths as $archive_id=>$archive_conf) {
-    print "<li><a href='?p={$archive_id}'>{$archive_conf['name']}</a></li>\n";
-  }
-  print "</ul>\n";
-}
+print $item->print_content();
 
 ?>
   </body>

@@ -33,4 +33,21 @@ class _item {
 
     return $ret;
   }
+
+  function print_content() {
+    $ret="";
+
+    $ret.="<ul class='content'>\n";
+    foreach($this->content() as $item) {
+      $ret.=$item->print_entry();
+    }
+
+    $ret.="</ul>\n";
+
+    return $ret;
+  }
+
+  function print_entry() {
+    return "<li>".$this->print_link()."</li>\n";
+  }
 }
