@@ -19,11 +19,20 @@ if(isset($_REQUEST['p'])) {
 
 if(sizeof($path_parts)) {
   try {
-    $last_dir=new _archive($path_parts[0]);
+    $item=new _archive($path_parts[0]);
 
-    for($i=1; $i<sizeof($path_parts); $i++) {
-      $dir=new _directory($path_parts[$i], $last_dir);
-      $last_dir=$dir;
+    for($i=1; $i<sizeof($path_parts)-1; $i++) {
+      $item=new _directory($path_parts[$i], $item);
+    }
+
+    if(sizeof($path_parts)>1) {
+      try {
+        $item=new _file($path_parts[sizeof($path_parts)-1], $item);
+      }
+      // if last part is not a file, try to load directory
+      catch(Exception $e) {
+        $item=new _directory($path_parts[sizeof($path_parts)-1], $item);
+      }
     }
   }
   catch(Exception $e) {
@@ -32,7 +41,7 @@ if(sizeof($path_parts)) {
   }
 }
 
-print $dir->print_link();
+print $item->print_link();
 
 if((sizeof($path_parts)==0)||(!isset($paths[$path_parts[0]]))) {
   print "<ul>\n";
