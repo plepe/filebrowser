@@ -9,11 +9,30 @@
   </head>
   <body>
 <?
+$db=new SQLite3("{$cache}/db.db");
+
 $path_parts=array();
 if(isset($_REQUEST['p'])) {
   $path=$_REQUEST['p'];
   $path_parts=explode("/", $path);
 }
+
+if(sizeof($path_parts)) {
+  try {
+    $last_dir=new _archive($path_parts[0]);
+
+    for($i=1; $i<sizeof($path_parts); $i++) {
+      $dir=new _directory($path_parts[$i], $last_dir);
+      $last_dir=$dir;
+    }
+  }
+  catch(Exception $e) {
+    echo "ERROR: ".$e->getMessage();
+    exit;
+  }
+}
+
+print $dir->print_link();
 
 if((sizeof($path_parts)==0)||(!isset($paths[$path_parts[0]]))) {
   print "<ul>\n";
