@@ -6,6 +6,8 @@ class _archive extends _directory {
 
     $this->archive_id=$archive_id;
 
+    $this->parent=get_root();
+
     if(!isset($paths[$archive_id]))
       throw new Exception("Archive '{$archive_id}' not found!");
 
@@ -28,6 +30,9 @@ class _archive extends _directory {
 
   function print_link_path() {
     $ret="";
+
+    if($this->parent)
+      $ret.=$this->parent->print_link_path();
 
     $ret.="<li class='archive'>".$this->print_link()."</li>\n";
 

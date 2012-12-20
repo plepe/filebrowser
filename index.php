@@ -11,10 +11,18 @@
 <?
 $db=new SQLite3("{$cache}/db.db");
 
+function discard_directory($part) {
+  if($part=="")
+    return false;
+
+  return true;
+}
+
 $path_parts=array();
 if(isset($_REQUEST['p'])) {
   $path=$_REQUEST['p'];
   $path_parts=explode("/", $path);
+  $path_parts=array_filter($path_parts, "discard_directory");
 }
 
 if(sizeof($path_parts)) {
@@ -40,6 +48,8 @@ if(sizeof($path_parts)) {
     exit;
   }
 }
+else
+  $item=get_root();
 
 print $item->print_link()."<br>\n";
 print "<ul>\n";

@@ -34,7 +34,7 @@ class _directory {
 
   function print_link() {
     return "<a href='".$this->url()."'>".
-      htmlspecialchars($this->data['name']).
+      htmlspecialchars($this->name()).
       "</a>";
   }
 
