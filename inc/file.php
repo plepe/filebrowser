@@ -38,4 +38,15 @@ class _file {
       htmlspecialchars($this->data['name']).
       "</a>";
   }
+
+  function print_link_path() {
+    $ret="";
+
+    if($this->parent)
+      $ret.=$this->parent->print_link_path();
+
+    $ret.="<li class='file'>".$this->print_link()."</li>\n";
+
+    return $ret;
+  }
 }

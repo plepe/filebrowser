@@ -25,4 +25,12 @@ class _archive extends _directory {
   function path() {
     return "/";
   }
+
+  function print_link_path() {
+    $ret="";
+
+    $ret.="<li class='archive'>".$this->print_link()."</li>\n";
+
+    return $ret;
+  }
 }

@@ -37,4 +37,15 @@ class _directory {
       htmlspecialchars($this->data['name']).
       "</a>";
   }
+
+  function print_link_path() {
+    $ret="";
+
+    if($this->parent)
+      $ret.=$this->parent->print_link_path();
+
+    $ret.="<li class='directory'>".$this->print_link()."</li>\n";
+
+    return $ret;
+  }
 }

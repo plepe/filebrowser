@@ -41,7 +41,10 @@ if(sizeof($path_parts)) {
   }
 }
 
-print $item->print_link();
+print $item->print_link()."<br>\n";
+print "<ul>\n";
+print $item->print_link_path();
+print "</ul>\n";
 
 if((sizeof($path_parts)==0)||(!isset($paths[$path_parts[0]]))) {
   print "<ul>\n";
