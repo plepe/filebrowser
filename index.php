@@ -11,45 +11,7 @@
 <?
 $db=new SQLite3("{$cache}/db.db");
 
-function discard_directory($part) {
-  if($part=="")
-    return false;
-
-  return true;
-}
-
-$path_parts=array();
-if(isset($_REQUEST['p'])) {
-  $path=$_REQUEST['p'];
-  $path_parts=explode("/", $path);
-  $path_parts=array_filter($path_parts, "discard_directory");
-}
-
-if(sizeof($path_parts)) {
-  try {
-    $item=new _archive($path_parts[0]);
-
-    for($i=1; $i<sizeof($path_parts)-1; $i++) {
-      $item=new _directory($path_parts[$i], $item);
-    }
-
-    if(sizeof($path_parts)>1) {
-      try {
-        $item=new _file($path_parts[sizeof($path_parts)-1], $item);
-      }
-      // if last part is not a file, try to load directory
-      catch(Exception $e) {
-        $item=new _directory($path_parts[sizeof($path_parts)-1], $item);
-      }
-    }
-  }
-  catch(Exception $e) {
-    echo "ERROR: ".$e->getMessage();
-    exit;
-  }
-}
-else
-  $item=get_root();
+$item=get_item((isset($_REQUEST['p'])?$_REQUEST['p']:null));
 
 print $item->print_link()."<br>\n";
 print "<ul>\n";
