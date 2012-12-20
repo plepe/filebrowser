@@ -1,16 +1,14 @@
 <?
 class _directory extends _item {
   function __construct($path_part, $parent, $data=null) {
-    parent::__construct($parent);
+    parent::__construct($path_part, $parent);
     global $db;
 
-    $this->path_part=$path_part;
-
     if($data===null) {
-      $sql_path=$db->escapeString($this->path());
+      $sql_name=$db->escapeString($this->path_part);
       $parent_id=$this->parent->directory_id;
 
-      $res=$db->query("select d.directory_id, d.path, dl.name from directory d join directory_link dl on d.directory_id=dl.sub_directory where d.path='{$sql_path}' and dl.directory_id={$parent_id}");
+      $res=$db->query("select d.directory_id, d.path, dl.name from directory d join directory_link dl on d.directory_id=dl.sub_directory where dl.name='{$sql_name}' and dl.directory_id={$parent_id}");
 
       if(!($data=$res->fetchArray()))
         throw new Exception("Directory '{$this->path_part}' not found");

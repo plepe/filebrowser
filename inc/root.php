@@ -3,7 +3,7 @@ $ob_root=null;
 
 class _root extends _item {
   function __construct() {
-    parent::__construct(null);
+    parent::__construct("", null);
   }
 
   function url() {

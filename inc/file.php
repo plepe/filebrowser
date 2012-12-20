@@ -1,10 +1,8 @@
 <?
 class _file extends _item {
   function __construct($path_part, $parent, $data=null) {
-    parent::__construct($parent);
+    parent::__construct($path_part, $parent);
     global $db;
-
-    $this->path_part=$path_part;
 
     if($data===null) {
       $sql_name=$db->escapeString($this->path_part);

@@ -1,11 +1,12 @@
 <?
-class _archive extends _item {
+class _archive extends _directory {
   function __construct($archive_id) {
-    parent::__construct(get_root());
     global $db;
     global $paths;
 
     $this->archive_id=$archive_id;
+    $this->path_part=$archive_id;
+    $this->parent=get_root();
 
     if(!isset($paths[$archive_id]))
       throw new Exception("Archive '{$archive_id}' not found!");
@@ -25,6 +26,10 @@ class _archive extends _item {
 
   function name() {
     return $this->data['name'];
+  }
+
+  function path() {
+    return "/";
   }
 
   function type() {

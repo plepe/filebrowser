@@ -1,7 +1,8 @@
 <?
 class _item {
-  function __construct($parent) {
+  function __construct($path_part, $parent) {
     $this->parent=$parent;
+    $this->path_part=$path_part;
   }
 
   function path() {
