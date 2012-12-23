@@ -12,6 +12,7 @@ $include=array();
 $include['php']=array(
   "inc/item.php",
   "inc/directory.php",
+  "inc/presenter.php",
   "inc/*.php",
 );
 $include['js']=array(

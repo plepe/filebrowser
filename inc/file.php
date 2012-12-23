@@ -44,7 +44,18 @@ class _file extends _item {
     return $this->archive->file_stat($this->path());
   }
 
+  function presenter() {
+    if(isset($this->presenter))
+      return $this->presenter;
+
+    $stat=$this->file_stat();
+
+    $this->presenter=get_presenter($this);
+
+    return $this->presenter;
+  }
+
   function print_content() {
-    return "<a href='".$this->url(array("_file"=>"download.php"))."'>Download</a>\n";
+    return $this->presenter()->render_fileview();
   }
 }
