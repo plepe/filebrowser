@@ -16,12 +16,17 @@ $db=new SQLite3("{$cache}/db.db");
 
 $item=get_item((isset($_REQUEST['p'])?$_REQUEST['p']:null));
 
-print $item->print_link()."<br>\n";
+print "<div class='info'>\n";
+print "<h2>Path</h2>\n";
 print "<ul>\n";
 print $item->print_link_path();
 print "</ul>\n";
+print "</div>\n";
 
+print "<div class='content'>\n";
+print "<h1>".$item->name()."</h1>\n";
 print $item->print_content();
+print "</div>\n";
 
 ?>
   </body>
