@@ -32,7 +32,9 @@ print "</div>\n";
 
 print "<div class='content'>\n";
 print "<h1>".$item->name()."</h1>\n";
+print "<div class='item ".$item->type()."'>\n";
 print $item->print_content();
+print "</div>\n";
 print "</div>\n";
 
 ?>

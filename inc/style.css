@@ -1,3 +1,26 @@
+body, p, h1, h2, h3, h4, li, a {
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 1em;
+}
+h1 {
+  font-size: 1.25em;
+  font-weight: bold;
+  margin: 0px;
+}
+h2 {
+  font-size: 1em;
+  font-weight: bold;
+  margin: 0px;
+  margin-top: 1em;
+}
+div > h2 {
+  margin-top: 0em;
+}
+ul {
+  margin: 0px;
+}
+
+
 div.info {
   position: absolute;
   width: 15em;
@@ -7,7 +30,18 @@ div.info {
 div.content {
   position: absolute;
   top: 0px;
+  bottom: 0em;
+  right: 15.5em;
+  left: 0.5em;
+}
+div.item {
   bottom: 0px;
-  right: 15em;
+  top: 2em;
   left: 0px;
+  right: 0px;
+  position: absolute;
+}
+
+div.item.file {
+  text-align: center;
 }
