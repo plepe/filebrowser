@@ -2,6 +2,9 @@ body, p, h1, h2, h3, h4, li, a {
   font-family: Helvetica, Arial, sans-serif;
   font-size: 1em;
 }
+body {
+  margin: 0.5em;
+}
 h1 {
   font-size: 1.25em;
   font-weight: bold;
@@ -20,23 +23,22 @@ ul {
   margin: 0px;
 }
 
-
 div.info {
   position: absolute;
   width: 15em;
-  top: 0px;
+  top: 0.5em;
   right: 0px;
 }
 div.content {
   position: absolute;
-  top: 0px;
-  bottom: 0em;
+  top: 0.5em;
+  bottom: 0.5em;
   right: 15.5em;
   left: 0.5em;
 }
 div.item {
   bottom: 0px;
-  top: 2em;
+  top: 2.5em;
   left: 0px;
   right: 0px;
   position: absolute;
@@ -44,4 +46,48 @@ div.item {
 
 div.item.file {
   text-align: center;
+}
+
+@media only screen and ( orientation: portrait ),
+       only screen and ( max-width: 50em )
+ {
+  div.content {
+    position: relative;
+    bottom: auto;
+    top: auto;
+    left: 0px;
+    right: 0px;
+  }
+  div.item {
+    position: relative;
+    left: 0px;
+    right: 20px;
+    top: 0px;
+  }
+  div.content img {
+    max-height: auto;
+    max-width: auto;
+  }
+  div.info {
+    position: relative;
+  }
+  div > h2 {
+    margin-top: 1em;
+  }
+}
+
+@media only screen and ( max-width: 50em ) {
+  body {
+    margin: 0px;
+  }
+  div.content {
+    left: 0px;
+    right: 15em;
+  }
+}
+
+@media only screen and ( max-width: 35em ) {
+  a {
+    text-decoration: none;
+  }
 }
