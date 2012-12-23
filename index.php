@@ -21,6 +21,13 @@ print "<h2>Path</h2>\n";
 print "<ul>\n";
 print $item->print_link_path();
 print "</ul>\n";
+
+$info=$item->print_info();
+if($info) {
+  print "<h2>Info</h2>\n";
+  print $info;
+}
+
 print "</div>\n";
 
 print "<div class='content'>\n";

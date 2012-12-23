@@ -55,6 +55,22 @@ class _file extends _item {
     return $this->presenter;
   }
 
+  function print_info() {
+    $ret="";
+    $stat=$this->file_stat();
+
+    $ret ="<ul>\n";
+    $ret.="<li>Mime-Type: {$stat['mime_type']}</li>\n";
+    $ret.="<li>Filesize: {$stat['size']}</li>\n";
+    $ret.="<li>Creation: ".format_date($stat['ctime'])."</li>\n";
+    $ret.="<li>Mod. Date: ".format_date($stat['mtime'])."</li>\n";
+    $ret.="</ul>\n";
+
+    // $ret.="<pre>".print_r($stat, 1)."</pre>\n";
+
+    return $ret;
+  }
+
   function print_content() {
     return $this->presenter()->render_fileview();
   }

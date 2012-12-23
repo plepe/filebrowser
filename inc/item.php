@@ -50,6 +50,9 @@ class _item {
   function print_entry() {
     return "<li>".$this->print_link()."</li>\n";
   }
+
+  function print_info() {
+  }
 }
 
 function get_item($path=null) {
