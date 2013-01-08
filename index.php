@@ -15,7 +15,12 @@ Header("Content-Type: text/html; charset=utf-8");
 <?
 $db=new SQLite3("{$cache}/db.db");
 
-$item=get_item((isset($_REQUEST['p'])?$_REQUEST['p']:null));
+if(isset($_REQUEST['search'])) {
+  $item=get_search($_REQUEST['search']);
+}
+else {
+  $item=get_item((isset($_REQUEST['p'])?$_REQUEST['p']:null));
+}
 
 print "<div class='content'>\n";
 print "<h1>".$item->name()."</h1>\n";
@@ -29,6 +34,14 @@ print "<h2>Path</h2>\n";
 print "<ul>\n";
 print $item->print_link_path();
 print "</ul>\n";
+
+print "<h2>Search</h2>\n";
+print "<form method='get'>\n";
+$html_search="";
+if(isset($_REQUEST['search']))
+  $html_search=htmlspecialchars($_REQUEST['search']);
+print "<input type='text' name='search' value=\"{$html_search}\">\n";
+print "</form>\n";
 
 $info=$item->print_info();
 if($info) {
