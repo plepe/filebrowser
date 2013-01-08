@@ -55,22 +55,22 @@ class _item {
   }
 }
 
+function __item_discard_directory($part) {
+  if($part=="")
+    return false;
+
+  return true;
+}
+
 function get_item($path=null) {
   global $paths;
-
-  function discard_directory($part) {
-    if($part=="")
-      return false;
-
-    return true;
-  }
 
   if($path===null)
     return get_root();
 
   $path_parts=array();
   $path_parts=explode("/", $path);
-  $path_parts=array_filter($path_parts, "discard_directory");
+  $path_parts=array_filter($path_parts, "__item_discard_directory");
 
   if(sizeof($path_parts)) {
     try {
