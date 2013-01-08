@@ -28,7 +28,8 @@ class _item {
 
   function print_link() {
     return "<a href='".$this->url()."'>".
-      htmlspecialchars($this->name()).
+      strtr(htmlspecialchars($this->name()),
+        array("."=>".&shy;", "_"=>"_&shy;", "-"=>"-&shy;")).
       "</a>";
   }
 
