@@ -47,3 +47,20 @@ class _directory extends _item {
     return "directory";
   }
 }
+
+function get_directory($id) {
+  global $db;
+
+  if(is_integer($id)) {
+    $sql_id=$db->escapeString($id);
+    $res=$db->query("select * from directory where directory_id='{$sql_id}'");
+  }
+  else {
+    $sql_path=$db->escapeString($id);
+    $res=$db->query("select * from directory where path='{$sql_path}'");
+  }
+
+  $data=$res->fetchArray();
+
+  return get_item("{$data['archive_id']}{$data['path']}");
+}
