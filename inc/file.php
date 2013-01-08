@@ -8,7 +8,7 @@ class _file extends _item {
       $sql_name=$db->escapeString($this->path_part);
       $parent_id=$this->parent->directory_id;
 
-      $res=$db->query("select d.directory_id, d.path, f.name from file f join directory d on f.directory_id=d.directory_id where name='{$sql_name}' and d.directory_id={$parent_id}");
+      $res=$db->query("select d.directory_id, d.path, f.name from directory_content f join directory d on f.directory_id=d.directory_id where name='{$sql_name}' and d.directory_id={$parent_id} and f.sub_directory is null");
 
       if(!($data=$res->fetchArray()))
         throw new Exception("File '{$this->path_part}' not found");

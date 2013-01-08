@@ -8,7 +8,7 @@ class _directory extends _item {
       $sql_name=$db->escapeString($this->path_part);
       $parent_id=$this->parent->directory_id;
 
-      $res=$db->query("select d.directory_id, d.path, dl.name from directory d join directory_link dl on d.directory_id=dl.sub_directory where dl.name='{$sql_name}' and dl.directory_id={$parent_id}");
+      $res=$db->query("select d.directory_id, d.path, dl.name from directory d join directory_content dl on d.directory_id=dl.sub_directory where dl.name='{$sql_name}' and dl.directory_id={$parent_id} and dl.sub_directory is not null");
 
       if(!($data=$res->fetchArray()))
         throw new Exception("Directory '{$this->path_part}' not found");
@@ -28,7 +28,7 @@ class _directory extends _item {
     if(isset($this->content))
       return $this->content;
 
-    $res=$db->query("select name, 'directory' as type from directory_link where directory_id='{$this->directory_id}' union select name, 'file' as type from file where directory_id='{$this->directory_id}'");
+    $res=$db->query("select name, case when sub_directory is null then 'file' else 'directory' end as type from directory_content where directory_id='{$this->directory_id}'");
     while($data=$res->fetchArray()) {
       switch($data['type']) {
         case 'directory':

@@ -5,16 +5,10 @@ create table directory (
   primary key(directory_id)
 );
 
-create table directory_link (
+create table directory_content (
   directory_id  integer not null,
   name      text    not null,
-  sub_directory integer null,
-  primary key(directory_id, name)
-);
-
-create table file (
-  directory_id  integer not null,
-  name      text    not null,
+  sub_directory integer null, -- directory_id of sub directory, null indicates file
   primary key(directory_id, name)
 );
 
