@@ -26,10 +26,12 @@ function memorize_directory($archive_id, $archive_conf, $path) {
       $sub_directory=memorize_directory($archive_id, $archive_conf, "{$path}{$f}/");
 
       $db->query("insert into directory_link (directory_id, name, sub_directory) values ({$directory_id}, '{$sqlite_file}', {$sub_directory})");
+      $db->query("insert into search_index (directory_id, name) values ({$directory_id}, '{$sqlite_file}')");
     }
     else {
       $sqlite_file=$db->escapeString($f);
       $db->query("insert into file (directory_id, name) values ({$directory_id}, '{$sqlite_file}')");
+      $db->query("insert into search_index (directory_id, name) values ({$directory_id}, '{$sqlite_file}')");
 
       print "  $path: $f\n";
     }
@@ -61,6 +63,7 @@ function memorize_link($link_data) {
 
   $sqlite_file=$db->escapeString($link_data[1]);
   $db->query("insert into directory_link (directory_id, name, sub_directory) values ({$link_data[0]}, '{$sqlite_file}', {$found})");
+  $db->query("insert into search_index (directory_id, name) values ({$link_data[0]}, '{$sqlite_file}')");
 }
 
 unlink("{$cache}/new.db");

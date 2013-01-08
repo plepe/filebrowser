@@ -17,3 +17,5 @@ create table file (
   name      text    not null,
   primary key(directory_id, name)
 );
+
+create virtual table search_index using fts4(directory_id, name);
