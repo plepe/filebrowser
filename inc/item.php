@@ -13,6 +13,19 @@ class _item {
     return $this->parent->url($options)."/".urlencode($this->path_part);
   }
 
+  function download_url($options=array()) {
+    $options['_file']="download.php/{$this->name()}";
+
+    return $this->url($options);
+  }
+
+
+  function view_url($options=array()) {
+    $options['_file']="view.php/{$this->name()}";
+
+    return $this->url($options);
+  }
+
   function print_link() {
     return "<a href='".$this->url()."'>".
       htmlspecialchars($this->name()).

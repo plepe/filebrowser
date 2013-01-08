@@ -19,7 +19,7 @@ class default_presenter extends _presenter {
   }
 
   function render_fileview() {
-    return "<a href='".$this->file->url(array("_file"=>"download.php"))."'>Download</a>\n";
+    return "<a href='".$this->file->download_url()."'>Download</a>\n";
   }
 }
 
