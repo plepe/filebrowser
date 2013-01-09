@@ -23,6 +23,25 @@ ul {
   margin: 0px;
 }
 
+/* mode_symbols */
+div.mode_symbols ul {
+  padding: 0;
+}
+div.mode_symbols ul li {
+  display: inline-block;
+  width: 12em;
+  min-height: 3em;
+  margin: 0;
+  margin-bottom: 0.5em;
+  margin-right: 0.5em;
+  vertical-align: top;
+  text-align: center;
+  padding: 0.125em;
+}
+div.mode_symbols ul li a {
+  vertical-align: bottom;
+}
+
 div.info {
   position: absolute;
   width: 15em;

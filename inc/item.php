@@ -62,7 +62,7 @@ class _item {
   }
 
   function print_entry() {
-    return "<li>".$this->print_link()."</li>\n";
+    return "<li>".$this->print_link()."</li>";
   }
 
   function print_info() {

@@ -23,7 +23,7 @@ else {
   $item=get_item((isset($_REQUEST['p'])?$_REQUEST['p']:null));
 }
 
-$available_modes=array("list");
+$available_modes=array("list", "symbols");
 if(isset($_REQUEST['mode'])&&in_array($_REQUEST['mode'], $available_modes))
   $_SESSION['mode']=$_REQUEST['mode'];
 elseif(!isset($_SESSION['mode']))
