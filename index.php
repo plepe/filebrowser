@@ -1,6 +1,7 @@
 <?php include "conf.php"; /* load a local configuration */ ?>
 <?php include "modulekit/loader.php"; /* loads all php-includes */ ?>
 <?
+session_start();
 Header("Content-Type: text/html; charset=utf-8");
 ?>
 <html>
@@ -22,9 +23,15 @@ else {
   $item=get_item((isset($_REQUEST['p'])?$_REQUEST['p']:null));
 }
 
+$available_modes=array("list");
+if(isset($_REQUEST['mode'])&&in_array($_REQUEST['mode'], $available_modes))
+  $_SESSION['mode']=$_REQUEST['mode'];
+elseif(!isset($_SESSION['mode']))
+  $_SESSION['mode']=$available_modes[0];
+
 print "<div class='content'>\n";
 print "<h1>".$item->name()."</h1>\n";
-print "<div class='item ".$item->type()."'>\n";
+print "<div class='item ".$item->type()." mode_{$_SESSION['mode']}'>\n";
 print $item->print_content();
 print "</div>\n";
 print "</div>\n";
@@ -41,6 +48,19 @@ $html_search="";
 if(isset($_REQUEST['search']))
   $html_search=htmlspecialchars($_REQUEST['search']);
 print "<input type='text' name='search' value=\"{$html_search}\">\n";
+print "</form>\n";
+
+print "<h2>View</h2>\n";
+print "<form method='get'>\n";
+print "<input type='hidden' name='p' value=\"{$_REQUEST['p']}\">\n";
+print "<select name='mode' onChange='form.submit()'>\n";
+foreach($available_modes as $mode) {
+  print "  <option value='$mode'";
+  if($_SESSION['mode']==$mode)
+    print " selected";
+  print ">$mode</option>\n";
+}
+print "</select>\n";
 print "</form>\n";
 
 $info=$item->print_info();
