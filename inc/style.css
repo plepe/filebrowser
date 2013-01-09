@@ -23,6 +23,27 @@ ul {
   margin: 0px;
 }
 
+/* mode_list */
+div.mode_list ul {
+  padding: 0;
+}
+div.mode_list ul li {
+  list-style-type: none;
+}
+div.mode_list ul li span.thumbnail {
+  margin-left: 0.5em;
+  margin-right: 0.5em;
+  width: 4em;
+  display: inline-block;
+  text-align: center;
+}
+div.mode_list ul li span.thumbnail img {
+  max-width: 4em;
+  max-height: 4em;
+  vertical-align: middle;
+  margin-bottom: 0.25em;
+}
+
 /* mode_symbols */
 div.mode_symbols ul {
   padding: 0;
@@ -37,6 +58,9 @@ div.mode_symbols ul li {
   vertical-align: top;
   text-align: center;
   padding: 0.125em;
+}
+div.mode_symbols ul li span.thumbnail {
+  display: block;
 }
 div.mode_symbols ul li a {
   vertical-align: bottom;
