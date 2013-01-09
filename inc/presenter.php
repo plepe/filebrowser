@@ -9,7 +9,20 @@ class _presenter {
   function render_fileview() {
   }
 
-  function render_thumbnail() {
+  function render_thumbnail($options=array()) {
+    return "<img src='".$this->thumbnail_url($options)."' />";
+  }
+
+  function thumbnail_url() {
+    return "lib/tango/scalable/mimetypes/text-x-generic.svg";
+  }
+
+  function get_thumbnail() {
+    return file_get_contents($this->thumbnail_url($options));
+  }
+
+  function stat_thumbnail() {
+    return array("mime_type"=>"image/svg+xml");
   }
 }
 
