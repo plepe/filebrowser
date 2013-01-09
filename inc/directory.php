@@ -48,8 +48,23 @@ class _directory extends _item {
 
     if($this==$this->archive)
       $actual_content=$this->get_directory_content("");
-    else
+    else {
+      // check if directory still exists
+      $stat=$this->archive->file_stat($this->data['path']);
+      // no -> check all sub directories
+      if(!$stat) {
+        $res=$db->query("select * from directory_content where directory_id='{$this->directory_id}' and sub_directory is not null");
+        while($data=$res->fetchArray())
+          get_directory($data['sub_directory'])->update();
+
+        $db->query("delete from directory_content where directory_id='{$this->directory_id}'");
+        $db->query("delete from directory where directory_id='{$this->directory_id}'");
+
+        return;
+      }
+
       $actual_content=$this->archive->get_directory_content($this->data['path']);
+    }
 
     $res=$db->query("select * from directory_content where directory_id='{$this->directory_id}'");
     while($data=$res->fetchArray()) {
@@ -59,6 +74,8 @@ class _directory extends _item {
       if(!isset($actual_content[$name])) {
         // print "Gone: {$name}\n";
 
+        if($data['sub_directory'])
+          get_directory($data['sub_directory'])->update();
         $sql_name=$db->escapeString($name);
         $db->query("delete from directory_content where directory_id='{$this->directory_id}' and name='{$sql_name}'");
       }
