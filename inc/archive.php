@@ -36,6 +36,10 @@ class _archive extends _directory {
     return $this->data['name'];
   }
 
+  function item_path() {
+    return $this->archive_id;
+  }
+
   function path() {
     return "/";
   }

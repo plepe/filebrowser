@@ -17,6 +17,10 @@ class _root extends _item {
     return $ret;
   }
 
+  function item_path() {
+    return "";
+  }
+
   function path() {
     return "";
   }

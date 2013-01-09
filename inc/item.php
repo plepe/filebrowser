@@ -9,6 +9,10 @@ class _item {
     return $this->parent->path().$this->path_part."/";
   }
 
+  function item_path() {
+    return $this->parent->item_path()."/".$this->path_part;
+  }
+
   function url($options=array()) {
     return $this->parent->url($options)."/".urlencode($this->path_part);
   }
