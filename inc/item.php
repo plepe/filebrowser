@@ -26,6 +26,10 @@ class _item {
     return $this->url($options);
   }
 
+  function thumbnail_url($options=array()) {
+    return "lib/tango/scalable/places/folder.svg";
+  }
+
   function print_link() {
     return "<a href='".$this->url()."'>".
       strtr(htmlspecialchars($this->name()),
@@ -61,8 +65,27 @@ class _item {
     return $ret;
   }
 
+  function print_thumbnail($options=array()) {
+    return "<img src='".$this->thumbnail_url($options)."' />";
+  }
+
+  function get_thumbnail($options=array()) {
+    return file_get_contents($this->thumbnail_url($options));
+  }
+
+  function stat_thumbnail() {
+    return array("mime_type"=>"image/svg+xml");
+  }
+
   function print_entry() {
-    return "<li>".$this->print_link()."</li>";
+    $ret="";
+
+    $ret.="<li>";
+    $ret.="<span class='thumbnail'>".$this->print_thumbnail()."</span>";
+    $ret.="<span class='item'>".$this->print_link()."</span>";
+    $ret.="</li>";
+
+    return $ret;
   }
 
   function print_info() {

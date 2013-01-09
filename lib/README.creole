@@ -1,0 +1,4 @@
+Download the following libraries:
+
+Tango: http://tango.freedesktop.org/Tango_Icon_Library#Download
+as directory tango/
