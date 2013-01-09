@@ -48,6 +48,19 @@ class _archive extends _directory {
     return file_get_contents($this->data['path']."/$path");
   }
 
+  function get_directory_content($path) {
+    $ret=array();
+
+    $d=opendir($this->data['path']."/{$path}");
+    while($f=readdir($d)) {
+      if(substr($f, 0, 1)!=".")
+        $ret[$f]=$this->file_stat("{$path}/{$f}");
+    }
+    closedir($d);
+
+    return $ret;
+  }
+
   function fopen($path, $mode) {
     return fopen($this->data['path']."/$path", $mode);
   }
