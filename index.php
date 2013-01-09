@@ -29,6 +29,8 @@ if(isset($_REQUEST['mode'])&&in_array($_REQUEST['mode'], $available_modes))
 elseif(!isset($_SESSION['mode']))
   $_SESSION['mode']=$available_modes[0];
 
+$item->update();
+
 print "<div class='content'>\n";
 print "<h1>".$item->name()."</h1>\n";
 print "<div class='item ".$item->type()." mode_{$_SESSION['mode']}'>\n";

@@ -43,6 +43,40 @@ class _directory extends _item {
     return $this->content;
   }
 
+  function update() {
+    global $db;
+
+    if($this==$this->archive)
+      $actual_content=$this->get_directory_content("");
+    else
+      $actual_content=$this->archive->get_directory_content($this->data['path']);
+
+    $res=$db->query("select * from directory_content where directory_id='{$this->directory_id}'");
+    while($data=$res->fetchArray()) {
+      $name=$data['name'];
+      $db_content[$name]=$data;
+
+      if(!isset($actual_content[$name])) {
+        // print "Gone: {$name}\n";
+
+        $sql_name=$db->escapeString($name);
+        $db->query("delete from directory_content where directory_id='{$this->directory_id}' and name='{$sql_name}'");
+      }
+    }
+
+    foreach($actual_content as $name=>$stat) {
+      if(!isset($db_content[$name])) {
+        // print "New: {$name}\n";
+
+        $sql_name=$db->escapeString($name);
+        $db->query("insert into directory_content (directory_id, name) values ('{$this->directory_id}', '{$sql_name}')");
+      }
+    }
+
+    // print_r($actual_content);
+    // print_r($db_content);
+  }
+
   function type() {
     return "directory";
   }

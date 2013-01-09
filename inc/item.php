@@ -99,6 +99,9 @@ class _item {
     return $ret;
   }
 
+  function update() {
+  }
+
   function print_info() {
   }
 }
