@@ -30,11 +30,20 @@ class _item {
     return "lib/tango/scalable/places/folder.svg";
   }
 
-  function print_link() {
-    return "<a href='".$this->url()."'>".
+  function print_name() {
+    return
       strtr(htmlspecialchars($this->name()),
-        array("."=>".&shy;", "_"=>"_&shy;", "-"=>"-&shy;")).
-      "</a>";
+        array("."=>".&shy;", "_"=>"_&shy;", "-"=>"-&shy;"));
+  }
+
+  function print_link() {
+    $ret="";
+
+    $ret.="<a href='".$this->url()."'>";
+    $ret.=$this->print_name();
+    $ret.="</a>\n";
+
+    return $ret;
   }
 
   function type() {
@@ -81,8 +90,10 @@ class _item {
     $ret="";
 
     $ret.="<li>";
+    $ret.="<a href='".$this->url()."'>";
     $ret.="<span class='thumbnail'>".$this->print_thumbnail()."</span>";
-    $ret.="<span class='item'>".$this->print_link()."</span>";
+    $ret.="<span class='item'>".$this->print_name()."</span>";
+    $ret.="</a>\n";
     $ret.="</li>";
 
     return $ret;
