@@ -67,6 +67,9 @@ class _archive extends _directory {
 
   function file_stat($path) {
     $stat=stat($this->data['path']."/$path");
+    if(!$stat)
+      return null;
+
     $stat['mime_type']=mime_content_type($this->data['path']."/$path");
 
     return $stat;
