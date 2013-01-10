@@ -6,4 +6,6 @@ function change_view_mode() {
   var item=document.getElementById("item");
   $(item).removeClass("mode_symbols mode_list");
   $(item).addClass("mode_"+view_mode);
+
+  ajax("set_view", { 'mode': view_mode }, function(result) { });
 }
