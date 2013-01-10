@@ -9,6 +9,7 @@ Header("Content-Type: text/html; charset=utf-8");
     <title><?=$title?></title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <?php print modulekit_to_javascript(); /* pass modulekit configuration to JavaScript */ ?>
+    <script type='text/javascript' src='lib/jquery.min.js'></script>
     <?php print modulekit_include_js(); /* prints all js-includes */ ?>
     <?php print modulekit_include_css(); /* prints all css-includes */ ?>
   </head>
