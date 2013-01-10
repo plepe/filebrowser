@@ -58,7 +58,7 @@ class _archive extends _directory {
     $d=opendir($this->data['path']."/{$path}");
     while($f=readdir($d)) {
       if(substr($f, 0, 1)!=".")
-        $ret[$f]=$this->file_stat("{$path}/{$f}");
+        $ret[]=$f;
     }
     closedir($d);
 

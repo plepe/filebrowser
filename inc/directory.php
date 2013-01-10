@@ -71,7 +71,7 @@ class _directory extends _item {
       $name=$data['name'];
       $db_content[$name]=$data;
 
-      if(!isset($actual_content[$name])) {
+      if(!in_array($name, $actual_content)) {
         // print "Gone: {$name}\n";
 
         if($data['sub_directory'])
@@ -81,7 +81,7 @@ class _directory extends _item {
       }
     }
 
-    foreach($actual_content as $name=>$stat) {
+    foreach($actual_content as $name) {
       if(!isset($db_content[$name])) {
         // print "New: {$name}\n";
 
