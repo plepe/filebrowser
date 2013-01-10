@@ -71,9 +71,13 @@ $db=new SQLite3("{$cache}/new.db");
 $db->query(file_get_contents("init.sql"));
 $links=array();
 
+$db->query("begin transaction");
+
 foreach($paths as $archive_id=>$archive_conf) {
   memorize_directory($archive_id, $archive_conf, "/");
 }
+
+$db->query("end transaction");
 
 print "* Memorizing links:\n";
 foreach($links as $link)

@@ -29,7 +29,9 @@ if(isset($_REQUEST['mode'])&&in_array($_REQUEST['mode'], $available_modes))
 elseif(!isset($_SESSION['mode']))
   $_SESSION['mode']=$available_modes[0];
 
+$db->query("begin transaction");
 $item->update();
+$db->query("end transaction");
 
 print "<div class='content'>\n";
 print "<h1>".$item->name()."</h1>\n";
