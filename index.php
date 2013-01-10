@@ -36,7 +36,7 @@ $db->query("end transaction");
 
 print "<div class='content'>\n";
 print "<h1>".$item->name()."</h1>\n";
-print "<div class='item ".$item->type()." mode_{$_SESSION['mode']}'>\n";
+print "<div id='item' class='item ".$item->type()." mode_{$_SESSION['mode']}'>\n";
 print $item->print_content();
 print "</div>\n";
 print "</div>\n";
@@ -56,9 +56,9 @@ print "<input type='text' name='search' value=\"{$html_search}\">\n";
 print "</form>\n";
 
 print "<h2>View</h2>\n";
-print "<form method='get'>\n";
+print "<form id='view' method='get'>\n";
 print "<input type='hidden' name='p' value=\"{$_REQUEST['p']}\">\n";
-print "<select name='mode' onChange='form.submit()'>\n";
+print "<select name='mode' onChange='change_view_mode()'>\n";
 foreach($available_modes as $mode) {
   print "  <option value='$mode'";
   if($_SESSION['mode']==$mode)
