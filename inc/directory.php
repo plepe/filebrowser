@@ -46,25 +46,21 @@ class _directory extends _item {
   function update() {
     global $db;
 
-    if($this==$this->archive)
-      $actual_content=$this->get_directory_content("");
-    else {
-      // check if directory still exists
-      $stat=$this->archive->file_stat($this->data['path']);
-      // no -> check all sub directories
-      if(!$stat) {
-        $res=$db->query("select * from directory_content where directory_id='{$this->directory_id}' and sub_directory is not null");
-        while($data=$res->fetchArray())
-          get_directory($data['sub_directory'])->update();
+    // check if directory still exists
+    $stat=$this->archive->file_stat($this->data['path']);
+    // no -> check all sub directories
+    if(!$stat) {
+      $res=$db->query("select * from directory_content where directory_id='{$this->directory_id}' and sub_directory is not null");
+      while($data=$res->fetchArray())
+        get_directory($data['sub_directory'])->update();
 
-        $db->query("delete from directory_content where directory_id='{$this->directory_id}'");
-        $db->query("delete from directory where directory_id='{$this->directory_id}'");
+      $db->query("delete from directory_content where directory_id='{$this->directory_id}'");
+      $db->query("delete from directory where directory_id='{$this->directory_id}'");
 
-        return;
-      }
-
-      $actual_content=$this->archive->get_directory_content($this->data['path']);
+      return;
     }
+
+    $actual_content=$this->archive->get_directory_content($this->data['path']);
 
     $res=$db->query("select * from directory_content where directory_id='{$this->directory_id}'");
     while($data=$res->fetchArray()) {

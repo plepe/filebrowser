@@ -19,6 +19,9 @@ class _archive extends _directory {
 
     $this->directory_id=$data['directory_id'];
     $this->archive=$this;
+
+    $this->data['archive_path']=$this->data['path'];
+    $this->data['path']="";
   }
 
   function url($options=array()) {
@@ -49,13 +52,13 @@ class _archive extends _directory {
   }
 
   function get_contents($path) {
-    return file_get_contents($this->data['path']."/$path");
+    return file_get_contents($this->data['archive_path']."/$path");
   }
 
   function get_directory_content($path) {
     $ret=array();
 
-    $d=opendir($this->data['path']."/{$path}");
+    $d=opendir($this->data['archive_path']."/{$path}");
     while($f=readdir($d)) {
       if(substr($f, 0, 1)!=".")
         $ret[]=$f;
@@ -66,15 +69,15 @@ class _archive extends _directory {
   }
 
   function fopen($path, $mode) {
-    return fopen($this->data['path']."/$path", $mode);
+    return fopen($this->data['archive_path']."/$path", $mode);
   }
 
   function file_stat($path) {
-    $stat=stat($this->data['path']."/$path");
+    $stat=stat($this->data['archive_path']."/$path");
     if(!$stat)
       return null;
 
-    $stat['mime_type']=mime_content_type($this->data['path']."/$path");
+    $stat['mime_type']=mime_content_type($this->data['archive_path']."/$path");
 
     return $stat;
   }
