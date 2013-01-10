@@ -14,6 +14,13 @@ class _file extends _item {
         throw new Exception("File '{$this->path_part}' not found");
     }
 
+    if(!isset($data['path']))
+      $data['path']=$this->parent->data['path'];
+    if(!isset($data['directory_id']))
+      $data['directory_id']=$this->parent->directory_id;
+    if(!isset($data['name']))
+      $data['name']=$path_part;
+
     $this->directory_id=$data['directory_id'];
     $this->name=$data['name'];
     $this->data=$data;
@@ -91,5 +98,13 @@ class _file extends _item {
 
   function print_thumbnail($options=array()) {
     return $this->presenter()->render_thumbnail($options);
+  }
+
+  function db_create() {
+    global $db;
+
+    $sqlite_file=$db->escapeString($this->name);
+    $db->query("insert into directory_content (directory_id, name) values ({$this->directory_id}, '{$sqlite_file}')");
+    $db->query("insert into search_index (directory_id, name) values ({$this->directory_id}, '{$sqlite_file}')");
   }
 }

@@ -54,7 +54,9 @@ class _directory extends _item {
       while($data=$res->fetchArray())
         get_directory($data['sub_directory'])->update();
 
-      $db->query("delete from directory_content where directory_id='{$this->directory_id}'");
+      foreach($this->directory_content() as $item)
+        $item->db_remove();
+      $this->db_remove();
       $db->query("delete from directory where directory_id='{$this->directory_id}'");
 
       return;
@@ -73,7 +75,7 @@ class _directory extends _item {
         if($data['sub_directory'])
           get_directory($data['sub_directory'])->update();
         $sql_name=$db->escapeString($name);
-        $db->query("delete from directory_content where directory_id='{$this->directory_id}' and name='{$sql_name}'");
+        get_item($this->item_path()."/{$name}")->db_remove();
       }
     }
 
@@ -82,12 +84,22 @@ class _directory extends _item {
         // print "New: {$name}\n";
 
         $sql_name=$db->escapeString($name);
-        $db->query("insert into directory_content (directory_id, name) values ('{$this->directory_id}', '{$sql_name}')");
+
+        $stat=$this->archive->file_stat("{$this->data['path']}/{$name}");
+        if($stat['mime_type']=="directory")
+          $new_item=new _directory($name, $this, $stat);
+        else
+          $new_item=new _file($name, $this, $stat);
+
+        $new_item->db_create();
       }
     }
 
     // print_r($actual_content);
     // print_r($db_content);
+
+    // Invalidate cache
+    unset($this->content);
   }
 
   function type() {

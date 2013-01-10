@@ -103,7 +103,19 @@ class _item {
     return $ret;
   }
 
+  function db_remove() {
+    global $db;
+
+    $sql_name=$db->escapeString($this->name);
+    $db->query("delete from directory_content where directory_id='{$this->directory_id}' and name='{$sql_name}'");
+    // Special delete for virtual table
+    $db->query("delete from search_index where rowid=(select rowid from search_index where directory_id='{$this->directory_id}' and name='{$sql_name}')");
+  }
+
   function update() {
+  }
+
+  function db_create() {
   }
 
   function print_info() {
