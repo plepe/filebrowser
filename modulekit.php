@@ -5,7 +5,7 @@ $name="Filebrowser";
 $id="filebrowser";
 
 // these modules should be loaded first
-$depend=array();
+$depend=array("ajax");
 
 // these files will be included in this order:
 $include=array();
