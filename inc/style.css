@@ -57,11 +57,12 @@ div.mode_symbols table.list {
 }
 div.mode_symbols table.list tr {
   display: inline-block;
-  width: 12em;
+  width: 9.0em;
   min-height: 3em;
   margin: 0;
   margin-bottom: 1em;
-  margin-right: 0.5em;
+  margin-left: 0.25em;
+  margin-right: 0.25em;
   vertical-align: top;
   text-align: center;
   padding: 0.125em;
