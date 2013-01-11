@@ -68,12 +68,25 @@ class _item {
     return $ret;
   }
 
-  function print_content() {
+  function print_content($param=array(), $options=array()) {
     $ret="";
+    if(!isset($param['start']))
+      $param['start']=0;
+    if(!isset($param['count']))
+      $param['count']=60;
 
     $ret.="<table class='list'>\n";
-    foreach($this->content() as $item) {
+    $content=$this->content($options);
+    for($i=$param['start'];
+      $i<min($param['start']+$param['count'], sizeof($content)); $i++) {
+      $item=$content[$i];
+
       $ret.=$item->print_entry();
+    }
+
+    if(sizeof($content)>$param['start']+$param['count']) {
+      $url=$this->url(array("start"=>$param['start']+$param['count']));
+      $ret.="<tr id='placeholder'><td colspan='3'><a href='{$url}'>next page</a></td></tr>\n";
     }
 
     $ret.="</table>\n";

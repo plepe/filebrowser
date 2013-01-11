@@ -23,7 +23,7 @@ class _directory extends _item {
     return $this->data['name'];
   }
 
-  function content() {
+  function content($options=array()) {
     global $db;
     if(isset($this->content))
       return $this->content;

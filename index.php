@@ -38,7 +38,7 @@ $db->query("end transaction");
 print "<div class='content'>\n";
 print "<h1>".$item->name()."</h1>\n";
 print "<div id='item' class='item ".$item->type()." mode_{$_SESSION['mode']}'>\n";
-print $item->print_content();
+print $item->print_content($_REQUEST);
 print "</div>\n";
 print "</div>\n";
 
