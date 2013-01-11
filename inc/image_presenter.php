@@ -19,7 +19,7 @@ class image_presenter extends _presenter {
       return file_get_contents($file_name);
 
     $f=$this->file->fopen("r");
-    $p=popen("convert -resize 128x128 - 'JPG:{$file_name}'", "w");
+    $p=popen("convert -resize 128x128\> - 'JPG:{$file_name}'", "w");
     while($r=fgets($f))
       fwrite($p, $r);
 
