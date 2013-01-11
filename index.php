@@ -4,6 +4,7 @@
 session_start();
 Header("Content-Type: text/html; charset=utf-8");
 ?>
+<!DOCTYPE html>
 <html>
   <head>
     <title><?=$title?></title>
@@ -24,7 +25,7 @@ else {
   $item=get_item((isset($_REQUEST['p'])?$_REQUEST['p']:null));
 }
 
-$available_modes=array("list", "symbols");
+$available_modes=array("list", "symbols", "details");
 if(isset($_REQUEST['mode'])&&in_array($_REQUEST['mode'], $available_modes))
   $_SESSION['mode']=$_REQUEST['mode'];
 elseif(!isset($_SESSION['mode']))

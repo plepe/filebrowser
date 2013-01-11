@@ -45,19 +45,6 @@ class _root extends _item {
 
     return $this->content;
   }
-
-  function print_content() {
-    $ret="";
-
-    $ret.="<ul class='content'>\n";
-    foreach($this->content() as $item) {
-      $ret.=$item->print_entry();
-    }
-
-    $ret.="</ul>\n";
-
-    return $ret;
-  }
 }
 
 function get_root() {

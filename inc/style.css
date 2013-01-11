@@ -24,46 +24,85 @@ ul {
 }
 
 /* mode_list */
-div.mode_list ul {
-  padding: 0;
+div.mode_list table.list {
+  border-collapse: collapse;
+  width: 100%;
 }
-div.mode_list ul li {
-  list-style-type: none;
+div.mode_list table.list tr {
 }
-div.mode_list ul li span.thumbnail {
-  margin-left: 0.5em;
-  margin-right: 0.5em;
+div.mode_list table.list tr td {
+  display: none;
+  padding: 0.125em;
+}
+div.mode_list table.list tr td.thumbnail {
+  display: table-cell;
+  vertical-align: top;
+  top: 0;
   width: 4em;
-  display: inline-block;
   text-align: center;
+  padding-bottom: 0.25em;
 }
-div.mode_list ul li span.thumbnail img {
+div.mode_list table.list tr td.thumbnail img {
   max-width: 4em;
   max-height: 4em;
-  vertical-align: middle;
-  margin-bottom: 0.25em;
+}
+div.mode_list table.list tr td.name {
+  display: table-cell;
+  padding-bottom: 0.25em;
 }
 
 /* mode_symbols */
-div.mode_symbols ul {
-  padding: 0;
+div.mode_symbols table.list {
+  display: block;
 }
-div.mode_symbols ul li {
+div.mode_symbols table.list tr {
   display: inline-block;
   width: 12em;
   min-height: 3em;
   margin: 0;
-  margin-bottom: 0.5em;
+  margin-bottom: 1em;
   margin-right: 0.5em;
   vertical-align: top;
   text-align: center;
   padding: 0.125em;
 }
-div.mode_symbols ul li span.thumbnail {
+div.mode_symbols table.list td {
+  display: none;
+}
+div.mode_symbols table.list td.thumbnail {
   display: block;
 }
-div.mode_symbols ul li a {
-  vertical-align: bottom;
+div.mode_symbols table.list td.name {
+  display: block;
+}
+
+/* mode_details */
+div.mode_details {
+}
+div.mode_details table.list {
+  border-collapse: collapse;
+  width: 100%;
+}
+div.mode_details table.list tr {
+}
+div.mode_details table.list tr td {
+  padding: 0.125em;
+}
+div.mode_details table.list tr td.thumbnail {
+  display: table-cell;
+  vertical-align: top;
+  top: 0;
+  width: 4em;
+  text-align: center;
+  padding-bottom: 0.25em;
+}
+div.mode_details table.list tr td.thumbnail img {
+  max-width: 4em;
+  max-height: 4em;
+}
+div.mode_details table.list tr td.name {
+  border-left: none;
+  padding-bottom: 0.25em;
 }
 
 div.info {

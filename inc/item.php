@@ -68,12 +68,12 @@ class _item {
   function print_content() {
     $ret="";
 
-    $ret.="<ul class='content'>\n";
+    $ret.="<table class='list'>\n";
     foreach($this->content() as $item) {
       $ret.=$item->print_entry();
     }
 
-    $ret.="</ul>\n";
+    $ret.="</table>\n";
 
     return $ret;
   }
@@ -93,12 +93,12 @@ class _item {
   function print_entry() {
     $ret="";
 
-    $ret.="<li>";
-    $ret.="<a href='".$this->url()."'>";
-    $ret.="<span class='thumbnail'>".$this->print_thumbnail()."</span>";
-    $ret.="<span class='item'>".$this->print_name()."</span>";
-    $ret.="</a>\n";
-    $ret.="</li>";
+    $ret.="<tr>";
+    $ret.="<td class='thumbnail'><a href='".$this->url()."'>".
+      $this->print_thumbnail()."</a></td>";
+    $ret.="<td class='name'><a href='".$this->url()."'>".
+      $this->print_name()."</a></td>";
+    $ret.="</tr>";
 
     return $ret;
   }
