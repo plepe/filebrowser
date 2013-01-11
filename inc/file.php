@@ -43,10 +43,10 @@ class _file extends _item {
     return $this->archive->get_contents($this->path());
   }
 
-  function thumbnail_url($options=array()) {
+  function thumbnail_url($param=array(), $options=array()) {
     $options['_file']="thumbnail.php/{$this->name()}";
 
-    return $this->url($options);
+    return $this->url($param, $options);
   }
 
   function get_thumbnail() {

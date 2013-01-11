@@ -13,24 +13,27 @@ class _item {
     return $this->parent->item_path()."/".$this->path_part;
   }
 
-  function url($options=array()) {
-    return $this->parent->url($options)."/".urlencode($this->path_part);
+  function url($param=array(), $options=array()) {
+    $param['p']="/".urlencode($this->path_part).
+      (isset($param['p'])?$param['p']:"");
+
+    return $this->parent->url($param, $options);
   }
 
-  function download_url($options=array()) {
+  function download_url($param=array(), $options=array()) {
     $options['_file']="download.php/{$this->name()}";
 
-    return $this->url($options);
+    return $this->url($param, $options);
   }
 
 
-  function view_url($options=array()) {
+  function view_url($param=array(), $options=array()) {
     $options['_file']="view.php/{$this->name()}";
 
-    return $this->url($options);
+    return $this->url($param, $options);
   }
 
-  function thumbnail_url($options=array()) {
+  function thumbnail_url($param=array(), $options=array()) {
     return "lib/tango/scalable/places/folder.svg";
   }
 
@@ -79,11 +82,11 @@ class _item {
   }
 
   function print_thumbnail($options=array()) {
-    return "<img src='".$this->thumbnail_url($options)."' />";
+    return "<img src='".$this->thumbnail_url(array(), $options)."' />";
   }
 
   function get_thumbnail($options=array()) {
-    return file_get_contents($this->thumbnail_url($options));
+    return file_get_contents($this->thumbnail_url(array(), $options));
   }
 
   function stat_thumbnail() {

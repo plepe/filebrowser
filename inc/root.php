@@ -6,13 +6,20 @@ class _root extends _item {
     parent::__construct("", null);
   }
 
-  function url($options=array()) {
+  function url($param=array(), $options=array()) {
     $ret="";
 
     if(isset($options['_file']))
       $ret.=$options['_file'];
 
-    $ret.="?p=";
+    $str=array();
+    foreach($param as $k=>$v)
+      if($k=="p")
+        $str[]=urlencode($k)."=".$v;
+      else
+        $str[]=urlencode($k)."=".urlencode($v);
+
+    $ret.="?".implode("&", $str);
 
     return $ret;
   }

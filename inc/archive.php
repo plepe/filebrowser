@@ -24,15 +24,10 @@ class _archive extends _directory {
     $this->data['path']="";
   }
 
-  function url($options=array()) {
-    $ret="";
+  function url($param=array(), $options=array()) {
+    $param['p']=$this->archive_id.(isset($param['p'])?$param['p']:"");
 
-    if(isset($options['_file']))
-      $ret.=$options['_file'];
-
-    $ret.="?p={$this->archive_id}";
-
-    return $ret;
+    return $this->parent->url($param, $options);
   }
 
   function name() {
