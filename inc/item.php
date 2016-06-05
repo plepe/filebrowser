@@ -13,6 +13,18 @@ class _item {
     return $this->parent->item_path()."/".$this->path_part;
   }
 
+  function get_index($item) {
+    if(!method_exists($this, 'content'))
+      return null;
+
+    foreach($this->content() as $index => $content_item) {
+      if($item->path_part == $content_item->path_part)
+        return $index;
+    }
+
+    return null;
+  }
+
   function url($param=array(), $options=array()) {
     $param['p']="/".urlencode($this->path_part).
       (isset($param['p'])?$param['p']:"");

@@ -48,6 +48,31 @@ print "<ul>\n";
 print $item->print_link_path();
 print "</ul>\n";
 
+if($item->parent) {
+  $content = $item->parent->content();
+  $index = $item->parent->get_index($item);
+
+  if($index !== null) {
+    if($index == 0) {
+      print "<img src='lib/tango/scalable/actions/go-previous.svg'/>";
+    }
+    else {
+      $other_item = $content[$index - 1];
+      print "<a href='" . htmlspecialchars($other_item->url())  . "' title='" . htmlspecialchars($other_item->name()) . "'><img src='lib/tango/scalable/actions/go-previous.svg'/></a>";
+    }
+
+    print "&nbsp;";
+
+    if($index >= sizeof($content) - 1) {
+      print "<img src='lib/tango/scalable/actions/go-next.svg'/>";
+    }
+    else {
+      $other_item = $content[$index + 1];
+      print "<a href='" . htmlspecialchars($other_item->url())  . "' title='" . htmlspecialchars($other_item->name()) . "'><img src='lib/tango/scalable/actions/go-next.svg'/></a>";
+    }
+  }
+}
+
 print "<h2>Search</h2>\n";
 print "<form method='get'>\n";
 $html_search="";
