@@ -54,7 +54,7 @@ class FileBrowser extends FileBrowserItem {
   }
   function get_item($path=null) {
     if($path===null)
-      return $this->get_root();
+      return $this;
 
     $path_parts=array();
     $path_parts=explode("/", $path);
