@@ -2,17 +2,16 @@
 class FileBrowserArchive extends FileBrowserDirectory {
   function __construct($parent, $archive_id) {
     global $db;
-    global $paths;
 
     $this->archive_id=$archive_id;
     $this->path_part=$archive_id;
     $this->parent=$parent;
     $this->root = $parent->root;
 
-    if(!isset($paths[$archive_id]))
+    if(!isset($this->root->paths[$archive_id]))
       throw new Exception("Archive '{$archive_id}' not found!");
 
-    $this->data=$paths[$archive_id];
+    $this->data=$this->root->paths[$archive_id];
 
     $res=$db->query("select * from directory where path='/' and archive_id='{$this->archive_id}'");
     if(!($data=$res->fetchArray()))

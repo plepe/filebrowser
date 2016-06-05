@@ -42,20 +42,17 @@ class FileBrowser extends FileBrowserItem {
   }
 
   function content() {
-    global $paths;
     if(isset($this->content))
       return $this->content;
 
     $this->content=array();
-    foreach($paths as $path_id=>$path_data) {
+    foreach($this->paths as $path_id=>$path_data) {
       $this->content[]=new FileBrowserArchive($this, $path_id);
     }
 
     return $this->content;
   }
   function get_item($path=null) {
-    global $paths;
-
     if($path===null)
       return $this->get_root();
 
