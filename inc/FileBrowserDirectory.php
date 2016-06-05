@@ -54,7 +54,7 @@ class FileBrowserDirectory extends FileBrowserItem {
       while($data=$res->fetchArray())
         $this->root->get_directory($data['sub_directory'])->update();
 
-      foreach($this->directory_content() as $item)
+      foreach($this->content() as $item)
         $item->db_remove();
       $this->db_remove();
       $db->query("delete from directory where directory_id='{$this->directory_id}'");
