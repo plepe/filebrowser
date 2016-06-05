@@ -1,4 +1,4 @@
-<?
+<?php
 class _search extends _item {
   function __construct($text) {
     $this->search_text=$text;

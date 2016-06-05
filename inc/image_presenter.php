@@ -1,4 +1,4 @@
-<?
+<?php
 class image_presenter extends _presenter {
   function render_fileview() {
     return "<a href='".$this->file->download_url()."'>".

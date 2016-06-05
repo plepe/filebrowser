@@ -1,7 +1,7 @@
 #!/usr/bin/php
 <?php include "conf.php"; /* load a local configuration */ ?>
 <?php include "modulekit/loader.php"; /* loads all php-includes */ ?>
-<?
+<?php
 function memorize_directory($archive_id, $archive_conf, $path) {
   global $db;
   global $links;

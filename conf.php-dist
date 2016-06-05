@@ -1,4 +1,4 @@
-<?
+<?php
 // A title for this media archive
 $title="Filebrowser";
 

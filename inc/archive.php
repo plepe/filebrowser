@@ -1,4 +1,4 @@
-<?
+<?php
 class _archive extends _directory {
   function __construct($archive_id) {
     global $db;

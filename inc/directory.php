@@ -1,4 +1,4 @@
-<?
+<?php
 class _directory extends _item {
   function __construct($path_part, $parent, $data=null) {
     parent::__construct($path_part, $parent);

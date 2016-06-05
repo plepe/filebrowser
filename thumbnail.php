@@ -1,6 +1,6 @@
 <?php include "conf.php"; /* load a local configuration */ ?>
 <?php include "modulekit/loader.php"; /* loads all php-includes */ ?>
-<?
+<?php
 $db=new SQLite3("{$cache}/db.db");
 
 $item=get_item((isset($_REQUEST['p'])?$_REQUEST['p']:null));

@@ -1,4 +1,4 @@
-<?
+<?php
 class _item {
   function __construct($path_part, $parent) {
     $this->parent=$parent;

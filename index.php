@@ -1,13 +1,13 @@
 <?php include "conf.php"; /* load a local configuration */ ?>
 <?php include "modulekit/loader.php"; /* loads all php-includes */ ?>
-<?
+<?php
 session_start();
 Header("Content-Type: text/html; charset=utf-8");
 ?>
 <!DOCTYPE html>
 <html>
   <head>
-    <title><?=$title?></title>
+    <title><?php print $title; ?></title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <?php print modulekit_to_javascript(); /* pass modulekit configuration to JavaScript */ ?>
     <script type='text/javascript' src='lib/jquery.min.js'></script>
@@ -15,7 +15,7 @@ Header("Content-Type: text/html; charset=utf-8");
     <?php print modulekit_include_css(); /* prints all css-includes */ ?>
   </head>
   <body>
-<?
+<?php
 $db=new SQLite3("{$cache}/db.db");
 
 if(isset($_REQUEST['search'])) {

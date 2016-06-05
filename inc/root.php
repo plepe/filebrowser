@@ -1,4 +1,4 @@
-<?
+<?php
 $ob_root=null;
 
 class _root extends _item {
