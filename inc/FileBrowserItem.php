@@ -1,5 +1,5 @@
 <?php
-class _item {
+class FileBrowserItem {
   function __construct($path_part, $parent) {
     $this->parent=$parent;
     $this->path_part=$path_part;
@@ -157,11 +157,11 @@ function __item_discard_directory($part) {
   return true;
 }
 
-function get_item($path=null) {
+function file_browser_get_item($path=null) {
   global $paths;
 
   if($path===null)
-    return get_root();
+    return file_browser_get_root();
 
   $path_parts=array();
   $path_parts=explode("/", $path);
@@ -169,19 +169,19 @@ function get_item($path=null) {
 
   if(sizeof($path_parts)) {
     try {
-      $item=new _archive($path_parts[0]);
+      $item=new FileBrowserArchive($path_parts[0]);
 
       for($i=1; $i<sizeof($path_parts)-1; $i++) {
-        $item=new _directory($path_parts[$i], $item);
+        $item=new FileBrowserDirectory($path_parts[$i], $item);
       }
 
       if(sizeof($path_parts)>1) {
         try {
-          $item=new _file($path_parts[sizeof($path_parts)-1], $item);
+          $item=new FileBrowserFile($path_parts[sizeof($path_parts)-1], $item);
         }
         // if last part is not a file, try to load directory
         catch(Exception $e) {
-          $item=new _directory($path_parts[sizeof($path_parts)-1], $item);
+          $item=new FileBrowserDirectory($path_parts[sizeof($path_parts)-1], $item);
         }
       }
     }
@@ -191,7 +191,7 @@ function get_item($path=null) {
     }
   }
   else
-    $item=get_root();
+    $item=file_browser_get_root();
 
   return $item;
 }

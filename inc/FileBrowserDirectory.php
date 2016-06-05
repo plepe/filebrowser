@@ -1,5 +1,5 @@
 <?php
-class _directory extends _item {
+class FileBrowserDirectory extends FileBrowserItem {
   function __construct($path_part, $parent, $data=null) {
     parent::__construct($path_part, $parent);
     global $db;
@@ -32,10 +32,10 @@ class _directory extends _item {
     while($data=$res->fetchArray()) {
       switch($data['type']) {
         case 'directory':
-          $this->content[]=new _directory($data['name'], $this);
+          $this->content[]=new FileBrowserDirectory($data['name'], $this);
           break;
         case 'file':
-          $this->content[]=new _file($data['name'], $this);
+          $this->content[]=new FileBrowserFile($data['name'], $this);
           break;
       }
     }
@@ -52,7 +52,7 @@ class _directory extends _item {
     if(!$stat) {
       $res=$db->query("select * from directory_content where directory_id='{$this->directory_id}' and sub_directory is not null");
       while($data=$res->fetchArray())
-        get_directory($data['sub_directory'])->update();
+        file_browser_get_directory($data['sub_directory'])->update();
 
       foreach($this->directory_content() as $item)
         $item->db_remove();
@@ -73,9 +73,9 @@ class _directory extends _item {
         // print "Gone: {$name}\n";
 
         if($data['sub_directory'])
-          get_directory($data['sub_directory'])->update();
+          file_browser_get_directory($data['sub_directory'])->update();
         $sql_name=$db->escapeString($name);
-        get_item($this->item_path()."/{$name}")->db_remove();
+        file_browser_get_item($this->item_path()."/{$name}")->db_remove();
       }
     }
 
@@ -87,9 +87,9 @@ class _directory extends _item {
 
         $stat=$this->archive->file_stat("{$this->data['path']}/{$name}");
         if($stat['mime_type']=="directory")
-          $new_item=new _directory($name, $this, $stat);
+          $new_item=new FileBrowserDirectory($name, $this, $stat);
         else
-          $new_item=new _file($name, $this, $stat);
+          $new_item=new FileBrowserFile($name, $this, $stat);
 
         $new_item->db_create();
       }
@@ -107,7 +107,7 @@ class _directory extends _item {
   }
 }
 
-function get_directory($id) {
+function file_browser_get_directory($id) {
   global $db;
 
   if(is_integer($id)) {
@@ -121,5 +121,5 @@ function get_directory($id) {
 
   $data=$res->fetchArray();
 
-  return get_item("{$data['archive_id']}{$data['path']}");
+  return file_browser_get_item("{$data['archive_id']}{$data['path']}");
 }

@@ -1,5 +1,5 @@
 <?php
-class _file extends _item {
+class FileBrowserFile extends FileBrowserItem {
   function __construct($path_part, $parent, $data=null) {
     parent::__construct($path_part, $parent);
     global $db;
@@ -71,7 +71,7 @@ class _file extends _item {
 
     $stat=$this->file_stat();
 
-    $this->presenter=get_presenter($this);
+    $this->presenter=file_browser_get_presenter($this);
 
     return $this->presenter;
   }

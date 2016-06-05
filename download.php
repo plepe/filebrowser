@@ -3,7 +3,7 @@
 <?php
 $db=new SQLite3("{$cache}/db.db");
 
-$item=get_item((isset($_REQUEST['p'])?$_REQUEST['p']:null));
+$item=file_browser_get_item((isset($_REQUEST['p'])?$_REQUEST['p']:null));
 
 $stat=$item->file_stat();
 Header("Content-Type: {$stat['mime_type']}");

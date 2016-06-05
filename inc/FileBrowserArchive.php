@@ -1,12 +1,12 @@
 <?php
-class _archive extends _directory {
+class FileBrowserArchive extends FileBrowserDirectory {
   function __construct($archive_id) {
     global $db;
     global $paths;
 
     $this->archive_id=$archive_id;
     $this->path_part=$archive_id;
-    $this->parent=get_root();
+    $this->parent=file_browser_get_root();
 
     if(!isset($paths[$archive_id]))
       throw new Exception("Archive '{$archive_id}' not found!");

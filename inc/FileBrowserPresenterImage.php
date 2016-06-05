@@ -1,5 +1,5 @@
 <?php
-class image_presenter extends _presenter {
+class FileBrowserPresenterImage extends FileBrowserPresenter {
   function render_fileview() {
     return "<a href='".$this->file->download_url()."'>".
       "<img src='".$this->file->download_url()."'/>".
@@ -34,4 +34,4 @@ class image_presenter extends _presenter {
   }
 }
 
-register_presenter("image_presenter", "~^image/(png|jpeg|gif)$~");
+register_presenter("FileBrowserPresenterImage", "~^image/(png|jpeg|gif)$~");

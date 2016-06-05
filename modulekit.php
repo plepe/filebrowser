@@ -10,10 +10,16 @@ $depend=array("ajax");
 // these files will be included in this order:
 $include=array();
 $include['php']=array(
-  "inc/item.php",
-  "inc/directory.php",
-  "inc/presenter.php",
-  "inc/*.php",
+  "inc/functions.php",
+  "inc/FileBrowserItem.php",
+  "inc/FileBrowserDirectory.php",
+  "inc/FileBrowserArchive.php",
+  "inc/FileBrowserFile.php",
+  "inc/FileBrowserPresenter.php",
+  "inc/FileBrowserPresenterDefault.php",
+  "inc/FileBrowserPresenterImage.php",
+  "inc/FileBrowserRoot.php",
+  "inc/FileBrowserSearch.php",
 );
 $include['js']=array(
   "inc/*.js",

@@ -1,7 +1,7 @@
 <?php
 $ob_root=null;
 
-class _root extends _item {
+class FileBrowserRoot extends FileBrowserItem {
   function __construct() {
     parent::__construct("", null);
   }
@@ -47,18 +47,18 @@ class _root extends _item {
 
     $this->content=array();
     foreach($paths as $path_id=>$path_data) {
-      $this->content[]=new _archive($path_id);
+      $this->content[]=new FileBrowserArchive($path_id);
     }
 
     return $this->content;
   }
 }
 
-function get_root() {
+function file_browser_get_root() {
   global $ob_root;
 
   if($ob_root===null)
-    $ob_root=new _root();
+    $ob_root=new FileBrowserRoot();
 
   return $ob_root;
 }

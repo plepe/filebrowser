@@ -1,9 +1,9 @@
 <?php
-class _search extends _item {
+class FileBrowserSearch extends FileBrowserItem {
   function __construct($text) {
     $this->search_text=$text;
 
-    $this->parent=get_root();
+    $this->parent=file_browser_get_root();
   }
 
   function name() {
@@ -23,13 +23,13 @@ class _search extends _item {
 
     $res=$db->query("select directory_content.*, case when sub_directory is null then 'file' else 'directory' end as type from search_index left join directory_content on search_index.directory_id=directory_content.directory_id and search_index.name=directory_content.name where search_index.name match '{$sql_search}'");
     while($data=$res->fetchArray()) {
-      $directory=get_directory($data['directory_id']);
+      $directory=file_browser_get_directory($data['directory_id']);
       switch($data['type']) {
         case 'directory':
-          $this->content[]=new _directory($data['name'], $directory);
+          $this->content[]=new FileBrowserDirectory($data['name'], $directory);
           break;
         case 'file':
-          $this->content[]=new _file($data['name'], $directory);
+          $this->content[]=new FileBrowserFile($data['name'], $directory);
           break;
       }
     }
@@ -42,6 +42,6 @@ class _search extends _item {
   }
 }
 
-function get_search($text) {
-  return new _search($text);
+function file_browser_get_search($text) {
+  return new FileBrowserSearch($text);
 }

@@ -19,10 +19,10 @@ Header("Content-Type: text/html; charset=utf-8");
 $db=new SQLite3("{$cache}/db.db");
 
 if(isset($_REQUEST['search'])) {
-  $item=get_search($_REQUEST['search']);
+  $item=file_browser_get_search($_REQUEST['search']);
 }
 else {
-  $item=get_item((isset($_REQUEST['p'])?$_REQUEST['p']:null));
+  $item=file_browser_get_item((isset($_REQUEST['p'])?$_REQUEST['p']:null));
 }
 
 $available_modes=array("list", "symbols", "details");

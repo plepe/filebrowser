@@ -1,7 +1,7 @@
 <?php
 $presenter_types=array();
 
-class _presenter {
+class FileBrowserPresenter {
   function __construct($file) {
     $this->file=$file;
   }
@@ -26,16 +26,6 @@ class _presenter {
   }
 }
 
-class default_presenter extends _presenter {
-  function __construct($file) {
-    parent::__construct($file);
-  }
-
-  function render_fileview() {
-    return "<a href='".$this->file->download_url()."'>Download</a>\n";
-  }
-}
-
 function register_presenter($class, $mime_regexp) {
   global $presenter_types;
 
@@ -45,7 +35,7 @@ function register_presenter($class, $mime_regexp) {
   );
 }
 
-function get_presenter($file) {
+function file_browser_get_presenter($file) {
   global $presenter_types;
   $stat=$file->file_stat();
   $ret=null;
@@ -59,7 +49,7 @@ function get_presenter($file) {
   }
 
   if(!$ret)
-    $ret=new default_presenter($file);
+    $ret=new FileBrowserPresenterDefault($file);
 
   return $ret;
 }
