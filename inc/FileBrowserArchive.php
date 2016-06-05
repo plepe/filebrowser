@@ -56,7 +56,7 @@ class FileBrowserArchive extends FileBrowserDirectory {
 
     $d=opendir($this->data['archive_path']."/{$path}");
     while($f=readdir($d)) {
-      if(substr($f, 0, 1)!=".")
+      if((substr($f, 0, 1)!=".") && is_readable($this->data['archive_path']."/{$path}/$f"))
         $ret[]=$f;
     }
     closedir($d);
