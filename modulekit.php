@@ -12,13 +12,13 @@ $include=array();
 $include['php']=array(
   "inc/functions.php",
   "inc/FileBrowserItem.php",
+  "inc/FileBrowser.php",
   "inc/FileBrowserDirectory.php",
   "inc/FileBrowserArchive.php",
   "inc/FileBrowserFile.php",
   "inc/FileBrowserPresenter.php",
   "inc/FileBrowserPresenterDefault.php",
   "inc/FileBrowserPresenterImage.php",
-  "inc/FileBrowserRoot.php",
   "inc/FileBrowserSearch.php",
 );
 $include['js']=array(

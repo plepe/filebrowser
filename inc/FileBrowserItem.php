@@ -1,7 +1,8 @@
 <?php
 class FileBrowserItem {
-  function __construct($path_part, $parent) {
+  function __construct($parent, $path_part) {
     $this->parent=$parent;
+    $this->root = $parent->root;
     $this->path_part=$path_part;
   }
 
@@ -148,50 +149,4 @@ class FileBrowserItem {
 
   function print_info() {
   }
-}
-
-function __item_discard_directory($part) {
-  if($part=="")
-    return false;
-
-  return true;
-}
-
-function file_browser_get_item($path=null) {
-  global $paths;
-
-  if($path===null)
-    return file_browser_get_root();
-
-  $path_parts=array();
-  $path_parts=explode("/", $path);
-  $path_parts=array_filter($path_parts, "__item_discard_directory");
-
-  if(sizeof($path_parts)) {
-    try {
-      $item=new FileBrowserArchive($path_parts[0]);
-
-      for($i=1; $i<sizeof($path_parts)-1; $i++) {
-        $item=new FileBrowserDirectory($path_parts[$i], $item);
-      }
-
-      if(sizeof($path_parts)>1) {
-        try {
-          $item=new FileBrowserFile($path_parts[sizeof($path_parts)-1], $item);
-        }
-        // if last part is not a file, try to load directory
-        catch(Exception $e) {
-          $item=new FileBrowserDirectory($path_parts[sizeof($path_parts)-1], $item);
-        }
-      }
-    }
-    catch(Exception $e) {
-      echo "ERROR: ".$e->getMessage();
-      exit;
-    }
-  }
-  else
-    $item=file_browser_get_root();
-
-  return $item;
 }

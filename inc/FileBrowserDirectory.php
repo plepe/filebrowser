@@ -1,7 +1,7 @@
 <?php
 class FileBrowserDirectory extends FileBrowserItem {
-  function __construct($path_part, $parent, $data=null) {
-    parent::__construct($path_part, $parent);
+  function __construct($parent, $path_part, $data=null) {
+    parent::__construct($parent, $path_part);
     global $db;
 
     if($data===null) {
@@ -32,10 +32,10 @@ class FileBrowserDirectory extends FileBrowserItem {
     while($data=$res->fetchArray()) {
       switch($data['type']) {
         case 'directory':
-          $this->content[]=new FileBrowserDirectory($data['name'], $this);
+          $this->content[] = new FileBrowserDirectory($this, $data['name']);
           break;
         case 'file':
-          $this->content[]=new FileBrowserFile($data['name'], $this);
+          $this->content[] = new FileBrowserFile($this, $data['name']);
           break;
       }
     }
@@ -52,7 +52,7 @@ class FileBrowserDirectory extends FileBrowserItem {
     if(!$stat) {
       $res=$db->query("select * from directory_content where directory_id='{$this->directory_id}' and sub_directory is not null");
       while($data=$res->fetchArray())
-        file_browser_get_directory($data['sub_directory'])->update();
+        $this->root->get_directory($data['sub_directory'])->update();
 
       foreach($this->directory_content() as $item)
         $item->db_remove();
@@ -73,9 +73,9 @@ class FileBrowserDirectory extends FileBrowserItem {
         // print "Gone: {$name}\n";
 
         if($data['sub_directory'])
-          file_browser_get_directory($data['sub_directory'])->update();
+          $this->root->get_directory($data['sub_directory'])->update();
         $sql_name=$db->escapeString($name);
-        file_browser_get_item($this->item_path()."/{$name}")->db_remove();
+        $this->root->get_item($this->item_path()."/{$name}")->db_remove();
       }
     }
 
@@ -87,9 +87,9 @@ class FileBrowserDirectory extends FileBrowserItem {
 
         $stat=$this->archive->file_stat("{$this->data['path']}/{$name}");
         if($stat['mime_type']=="directory")
-          $new_item=new FileBrowserDirectory($name, $this, $stat);
+          $new_item = new FileBrowserDirectory($this, $name, $stat);
         else
-          $new_item=new FileBrowserFile($name, $this, $stat);
+          $new_item = new FileBrowserFile($this, $name, $stat);
 
         $new_item->db_create();
       }
@@ -105,21 +105,4 @@ class FileBrowserDirectory extends FileBrowserItem {
   function type() {
     return "directory";
   }
-}
-
-function file_browser_get_directory($id) {
-  global $db;
-
-  if(is_integer($id)) {
-    $sql_id=$db->escapeString($id);
-    $res=$db->query("select * from directory where directory_id='{$sql_id}'");
-  }
-  else {
-    $sql_path=$db->escapeString($id);
-    $res=$db->query("select * from directory where path='{$sql_path}'");
-  }
-
-  $data=$res->fetchArray();
-
-  return file_browser_get_item("{$data['archive_id']}{$data['path']}");
 }

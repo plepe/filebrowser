@@ -1,7 +1,7 @@
 <?php
 class FileBrowserFile extends FileBrowserItem {
-  function __construct($path_part, $parent, $data=null) {
-    parent::__construct($path_part, $parent);
+  function __construct($parent, $path_part, $data=null) {
+    parent::__construct($parent, $path_part);
     global $db;
 
     if($data===null) {
@@ -14,8 +14,9 @@ class FileBrowserFile extends FileBrowserItem {
         throw new Exception("File '{$this->path_part}' not found");
     }
 
-    if(!isset($data['path']))
+    if(!isset($data['path'])) {
       $data['path']=$this->parent->data['path'];
+    }
     if(!isset($data['directory_id']))
       $data['directory_id']=$this->parent->directory_id;
     if(!isset($data['name']))
