@@ -64,6 +64,16 @@ if($item->parent) {
 
     print "&nbsp;";
 
+    if($item == $item->root) {
+      print "<img src='lib/tango/scalable/actions/go-up.svg'/>";
+    }
+    else {
+      $other_item = $item->parent;
+      print "<a href='" . htmlspecialchars($other_item->url())  . "' title='" . htmlspecialchars($other_item->name()) . "'><img src='lib/tango/scalable/actions/go-up.svg'/></a>";
+    }
+
+    print "&nbsp;";
+
     if($index >= sizeof($content) - 1) {
       print "<img src='lib/tango/scalable/actions/go-next.svg'/>";
     }
